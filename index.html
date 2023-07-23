@@ -172,6 +172,7 @@ enter.onclick = function(){
 	}
 	else{
 		num.value = '';
+		num.focus();
 		if(state == 1){
 			var nObj = {};
 			if(!GetCowsAndBulls(m1, m2, m3, m4, yourNum, nObj)){
@@ -179,7 +180,7 @@ enter.onclick = function(){
 			}else{
 				var cows = nObj['cows'], bulls = nObj['bulls'];
 				msg.innerText = 'You guessed ' + cows + ' cows and ' + bulls + ' bulls.';
-				yourguess.innerHTML += '<br />' + yourNum + ' (cows: ' + cows + ', bulls: ' + bulls + ')';
+				yourguess.innerHTML += '<br />' + yourNum + ' (bulls: ' + bulls + ', cows: ' + cows + ')';
 				
 				if(bulls == 4){
 					msg.innerText = 'Congratulations';
@@ -190,7 +191,7 @@ enter.onclick = function(){
 					state = 2;
 					myCows = myBulls = 0;
 					
-					info.innerText = 'Enter how many cows :';
+					info.innerText = 'Enter how many bulls :';
 					
 					myGuess = GetMyGuess(nums);
 					if(myGuess == 0){
@@ -203,22 +204,22 @@ enter.onclick = function(){
 			}
 		}else if(state == 2){
 			if(yourNum < 0 || yourNum > 4){
-				alert('Invalid cows count');
+				alert('Invalid bulls count');
 			}else{
-				myCows = yourNum;
+				myBulls = yourNum;
 				state = 3;
-				info.innerText = 'Enter how many bulls :';
+				info.innerText = 'Enter how many cows :';
 			}
 		}else if(state == 3){
 			if(yourNum < 0 || yourNum > 4){
-				alert('Invalid bulls count');
+				alert('Invalid cows count');
 			}
 			else{
-				myBulls = yourNum;
+				myCows = yourNum;
 				
 				if(myBulls != 4){
 					RemoveNums(myGuess, nums, myCows, myBulls);
-					myguess.innerHTML += '<br />' + myGuess + ' (cows: ' + myCows + ', bulls: ' + myBulls + ')';
+					myguess.innerHTML += '<br />' + myGuess + ' (bulls: ' + myBulls  + ', cows: ' + myCows + ')';
 				}else{
 					msg.innerText = 'Congratulate me';
 					iGuessed = 1;
