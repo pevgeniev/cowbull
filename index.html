@@ -22,8 +22,12 @@ height: 100%;
 <button id="enter">Enter</button>
 
 <br/>
-<div id="yourguess" style="display: inline-block; width: 20%"></div>
-<div id="myguess" style="display: inline-block; width: 20%"></div>	
+<div style="display: inline-block; width: 20%">Your guesses: <br/>
+	<div id="yourguess" > </div>
+</div>
+<div style="display: inline-block; width: 20%">My guesses: <br/>
+	<div id="myguess" ></div>
+</div>	
 </div>
 
 <script>
@@ -115,7 +119,7 @@ function RemoveNums(myGuess, nums, cows, bulls)
 	var toAllow = [];
 	for(var i = 0; i < nums.length; ++i){
 		var nCows, nBulls, nCowsBulls = {};
-		GetCowsAndNums(m1, m2, m3, m4, nums[i].num, nCowsBulls);
+		GetCowsAndNums(m1, m2, m3, m4, nums[i], nCowsBulls);
 		nCows = nCowsBulls['cows'], bulls = nCowsBulls['bulls'];
 		
 		if(cows == nCows && bulls == nBulls){
