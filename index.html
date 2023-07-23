@@ -18,7 +18,7 @@ height: 100%;
 
 <div>
 <label id="info" for="num"></label>
-<input id="num" type="text" />
+<input id="" type="text" />
 <button id="enter">Enter</button>
 </div>
 
@@ -150,11 +150,12 @@ function init(){
 
 enter.onclick = function(){
 	msg.innerText = '';
-	var yourNum = parseInt(num.val), nObj = {};
+	var yourNum = parseInt(num.value), nObj = {};
 	if(isNaN(yourNum)){
 		msg.innerText = 'Invalid number';
 	}
 	else{
+		num.value = '';
 		if(state == 1){
 			var nObj = {};
 			if(!GetCowsAndNums(m1, m2, m3, m3, yourNum, nObj)){
@@ -184,6 +185,8 @@ enter.onclick = function(){
 				msg.innerText = 'Invalid cows count';
 			}else{
 				myCows = yourNum;
+				state = 3;
+				info.innerText = 'Enter how many bulls :';
 			}
 		}else if(state == 3){
 			if(yourNum < 0 || yourNum > 4){
