@@ -1,6 +1,7 @@
 <html>
 <head>
-
+<meta charset="UTF-8">
+	
 <style>
 head, body {
 width: 100%;
@@ -10,8 +11,8 @@ height: 100%;
 </head>
 
 <body>
-<h2>Cows and bulls</h2>
-<h4>Pick a number and follow the screen instructions bellow</h4>
+<h2>Крави и бикове</h2>
+<h4>Избери си число и следвай инструкциите по-долу.</h4>
 	
 <div id="msg">
 </div>
@@ -19,14 +20,14 @@ height: 100%;
 <div>
 <label id="info" for="num"></label>
 <input id="num" type="text" />
-<button id="enter">Enter</button>
+<button id="enter">Въведи</button>
 </div>
 
 <div style="display: table">
-<div style="display: table-cell">Your guesses: <br/>
+<div style="display: table-cell">Твоите опити: <br/>
 	<div id="yourguess" > </div>
 </div>
-<div style="display: table-cell; padding-left: 20px">My guesses: <br/>
+<div style="display: table-cell; padding-left: 20px">Моите опити: <br/>
 	<div id="myguess" ></div>
 </div>	
 </div>
@@ -159,7 +160,7 @@ function init(){
 
 	state = 1;
 	iGuessed = 0;
-	info.innerText = 'Enter a guess number:';
+	info.innerText = 'Въведи число за отгатване:';
 	msg.innerText = '';
 	myguess.innerHTML = '';
 	yourguess.innerHTML = '';
@@ -168,7 +169,7 @@ function init(){
 enter.onclick = function(){
 	var yourNum = parseInt(num.value), nObj = {};
 	if(isNaN(yourNum)){
-		alert('Invalid number');
+		alert('Невалидно число');
 	}
 	else{
 		num.value = '';
@@ -176,14 +177,15 @@ enter.onclick = function(){
 		if(state == 1){
 			var nObj = {};
 			if(!GetCowsAndBulls(m1, m2, m3, m4, yourNum, nObj)){
-				alert('Invalid guess number');
+				alert('Невалидно число за отгатване');
 			}else{
 				var cows = nObj['cows'], bulls = nObj['bulls'];
-				msg.innerText = 'You guessed ' + cows + ' cows and ' + bulls + ' bulls.';
-				yourguess.innerHTML += '<br />' + yourNum + ' (bulls: ' + bulls + ', cows: ' + cows + ')';
+				msg.innerText = 'Ти отгатна: ' + bulls + ' бика и ' + cows + ' крави' +;
+				yourguess.innerHTML += '<br />' + yourNum + ' (бика: ' + bulls + ', крави: ' + cows + ')';
 				
 				if(bulls == 4){
-					msg.innerText = 'Congratulations';
+					yourguess.innerHTML += 'Поздравления!';
+					msg.innerText = 'Поздравления!';
 				}
 
 				if(iGuessed == 0)
@@ -191,42 +193,43 @@ enter.onclick = function(){
 					state = 2;
 					myCows = myBulls = 0;
 					
-					info.innerText = 'Enter how many bulls :';
+					info.innerText = 'Въведи колко бика познах:';
 					
 					myGuess = GetMyGuess(nums);
 					if(myGuess == 0){
-						alert(' You cheated');
+						alert(' Дали излъга някъде?);
 					}
 					else{
-						msg.innerText += ' My guess is : ' + myGuess;
+						msg.innerText += ' Моят опит е: ' + myGuess;
 					}
 				}
 			}
 		}else if(state == 2){
 			if(yourNum < 0 || yourNum > 4){
-				alert('Invalid bulls count');
+				alert('Невалидна бройка бикове');
 			}else{
 				myBulls = yourNum;
 				state = 3;
-				info.innerText = 'Enter how many cows :';
+				info.innerText = 'Въведи колко крави познах: ';
 			}
 		}else if(state == 3){
 			if(yourNum < 0 || yourNum > 4){
-				alert('Invalid cows count');
+				alert('Невалидна бройка крави');
 			}
 			else{
 				myCows = yourNum;
+				myguess.innerHTML += '<br />' + myGuess + ' (бикове: ' + myBulls  + ', крави: ' + myCows + ')';
 				
 				if(myBulls != 4){
 					RemoveNums(myGuess, nums, myCows, myBulls);
-					myguess.innerHTML += '<br />' + myGuess + ' (bulls: ' + myBulls  + ', cows: ' + myCows + ')';
 				}else{
-					msg.innerText = 'Congratulate me';
+					myguess.innerHTML += 'Познах!';
+					msg.innerText = 'Познах!';
 					iGuessed = 1;
 				}
 				
 				state = 1;
-				info.innerText = 'Enter a guess number:';
+				info.innerText = 'Въведи число за отгатване:';
 				msg.innerText = '';
 				
 			}
