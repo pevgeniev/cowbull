@@ -1,0 +1,210 @@
+<html>
+<head>
+
+<style>
+head, body {
+width: 100%;
+height: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<div id="msg">
+</div>
+
+<div>
+<label id="info" for="num" />
+<input id="num" type="text" />
+<button id="enter">Enter</button>
+</div>
+
+<script>
+
+var num = document.getElementById('num');
+var info = document.getElementById('info');
+var msg = document.getElementById('msg');
+var enter = document.getElementById('enter');
+
+var minNum = 1022;
+var maxNum = 9877;
+
+function isNumAllowed(int num){
+	if (num <= minNum || num >= maxNum)
+		return false;
+	int n1 = num % 10;
+	num /= 10;
+	int n2 = num % 10;
+	num /= 10;
+	int n3 = num % 10;
+	int n4 = num / 10;
+	return n1 != 0 && n1 != n2 && n1 != n3 && n1 != n4 && n2 != n3 && n2 != n4 && n3 != n4;
+}
+
+function isNumAllowed2(num, objNum){
+	if (num <= minNum || num >= maxNum)
+		return false;
+	objNum['n1'] = num % 10;
+	num /= 10;
+	objNum['n2'] = num % 10;
+	num /= 10;
+	objNum['n3'] = num % 10;
+	objNum['n4'] = num / 10;
+	return objNum['n1'] != 0 && objNum['n1'] != objNum['n2'] && objNum['n1'] != n3 && objNum['n1'] != objNum['n4']  && 
+		objNum['n2'] != objNum['n3'] && objNum['n2'] != objNum['n4']  && objNum['n3'] != objNum['n4'] ;
+}
+
+function GetCowsAndNums(m1, m2, m3, m4, guessNum, objCowsBulls){
+	var cows = bulls = 0;
+	var g = {};
+	if(isNumAllowed2(guessNum, g)){
+		return false;
+	}
+	else{
+		var g1 = g['n1'], g2 = g['n2'], g3 = g['n3'], g4 = g['n4'];
+		if(m1 == g1)
+			bulls++;
+		if(m2 == g2)
+			bulls++;
+		if(m3 == g3)
+			bulls++;
+		if(m4 == g4)
+			bulls++;
+		if(m1 == g2 || m1 == g3 || m1 == g4)
+			cows++;
+		if(m2 == g1 || m2 == g3 || m2 == g4)
+			cows++;
+		if(m3 == g1 || m3 == g2 || m3 == g4)
+			cows++;
+		if(m4 == g1 || m4 == g2 || m4 == g3)
+			cows++;
+	
+		objCowsBulls['cows'] = cows;
+		objCowsBulls['bulls'] = bulls;
+		return true;
+	}
+}
+
+function getRandomInt(min, max) {
+  return min + Math.floor(Math.random() * (max - min));
+}
+
+function GetMyGuess(nums){
+	if(nums.length == 0){
+		return 0;
+	}
+	var myGuess = nums[getRandomInt(0, nums.length)];
+	return myGuess;
+}
+
+function RemoveNums(myGuess, nums, cows, bulls)
+{
+	var m1, m2, m3, m4, m = {};
+	isNumAllowed2(myGuess, m);
+	m1 = m['n1'], m2 = m['n2'], m3 = m['n3'], m4 = m['n4'];
+	
+	var toAllow = [];
+	for(var i = 0; i < nums.length; ++i){
+		int nCows, nBulls, nCowsBulls = {};
+		GetCowsAndNums(m1, m2, m3, m4, nums[i].num, nCowsBulls);
+		nCows = nCowsBulls['cows'], bulls = nCowsBulls['bulls'];
+		
+		if(cows == nCows && bulls == nBulls){
+			toAllow.push(nums[i]);
+		}
+	}
+	nums.length = 0;
+	for(var j = 0; j < toAllow.length; ++j){
+		nums.push(toAllow[j]);
+	}
+}
+
+var nums = [];
+var myNum = 0;
+var m1 = 0, m2 = 0, m3 = 0, m4 = 0;
+var state = 1;//1 - user enter number, 2 - user enter cows, 3 - user enters bulls 
+var myCows = 0, myBulls = 0, myGuess = 0;
+
+function init(){
+	nums.length = 0;
+	
+	for(var i = minNum + 1; i < maxNum; ++i){
+		if(isNumAllowed(i)){
+			nums.push(i);
+		}
+	}
+
+	myNum = nums[getRandomInt(0, nums.length];
+	var m = {};
+	isNumAllowed2(myNum, m);
+
+	m1 = m['n1'], m2 = m['n2'], m3 = m['n3'], m4 = m['n4'];
+	console.log("My num ", myNum);
+
+	info.innerText = 'Enter a guess number:';
+	msg.innerText = '';
+}
+
+enter.onclick = function(){
+	msg.innerText = '';
+	var yourNum = parseInt(num.val), nObj = {};
+	if(isNaN(yourNum)){
+		msg.innerText = 'Invalid number';
+	}
+	else{
+		if(state == 1){
+			var nObj = {};
+			if(!GetCowsAndNums(m1, m2, m3, m3, yourNum, nObj)){
+				msg.innerText = 'Invalid guess number';
+			}else{
+				var cows = nObj['cows'], bulls = nObj['bulls'];
+				msg.innerText = 'You guessed ' + cows + ' cows and ' + bulls + ' bulls';
+				
+				if(bulls == 4){
+					msg.innerText = 'Congratulations';
+				}
+				state = 2;
+				myCows = myBulls = 0;
+				
+				info.innerText = 'Enter how many cows :';
+				
+				myGuess = GetMyGuess(nums);
+				if(myGuess == 0){
+					msg.innerText = 'You cheated';
+				}
+				else{
+					msg.innerText = 'My guess is : ' + myGuess;
+				}
+			}
+		}else if(state == 2){
+			if(yourNum < 0 || yourNum > 4){
+				msg.innerText = 'Invalid cows count';
+			}else{
+				myCows = yourNum;
+			}
+		}else if(state == 3){
+			if(yourNum < 0 || yourNum > 4){
+				msg.innerText = 'Invalid bulls count';
+			}
+			else{
+				myBulls = yourNum;
+				
+				if(myBulls != 4){
+					RemoveNums(myGuess, nums, myCows, myBulls);
+					
+					state = 1;
+					info.innerText = 'Enter a guess number:';
+					msg.innerText = '';
+				}else{
+					msg.innerText = 'Congratulate me';
+				}
+			}
+		}
+	}
+}
+
+</script>
+</body>
+
+</html>
