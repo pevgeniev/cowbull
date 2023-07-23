@@ -120,7 +120,7 @@ function RemoveNums(myGuess, nums, cows, bulls)
 	for(var i = 0; i < nums.length; ++i){
 		var nCows, nBulls, nCowsBulls = {};
 		GetCowsAndNums(m1, m2, m3, m4, nums[i], nCowsBulls);
-		nCows = nCowsBulls['cows'], bulls = nCowsBulls['bulls'];
+		nCows = nCowsBulls['cows'], nBulls = nCowsBulls['bulls'];
 		
 		if(cows == nCows && bulls == nBulls){
 			toAllow.push(nums[i]);
@@ -154,6 +154,7 @@ function init(){
 	m1 = m['n1'], m2 = m['n2'], m3 = m['n3'], m4 = m['n4'];
 	console.log("My num ", myNum);
 
+	state = 1;
 	info.innerText = 'Enter a guess number:';
 	msg.innerText = '';
 	myguess.innerHTML = '';
