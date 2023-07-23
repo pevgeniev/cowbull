@@ -65,7 +65,7 @@ function isNumAllowed2(num, objNum){
 function GetCowsAndNums(m1, m2, m3, m4, guessNum, objCowsBulls){
 	var cows = bulls = 0;
 	var g = {};
-	if(isNumAllowed2(guessNum, g)){
+	if(!isNumAllowed2(guessNum, g)){
 		return false;
 	}
 	else{
