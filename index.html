@@ -18,8 +18,11 @@ height: 100%;
 
 <div>
 <label id="info" for="num"></label>
-<input id="" type="text" />
+<input id="num" type="text" />
 <button id="enter">Enter</button>
+
+<div id="yourguess" style="display: inline-block; width: 50%"></div>
+<div id="myguess" style="display: inline-block; width: 50%"></div>	
 </div>
 
 <script>
@@ -28,7 +31,9 @@ var num = document.getElementById('num');
 var info = document.getElementById('info');
 var msg = document.getElementById('msg');
 var enter = document.getElementById('enter');
-
+var yourguess = document.getElementById('yourguess');
+var myguess = document.getElementById('myguess');
+	
 var minNum = 1022;
 var maxNum = 9877;
 
@@ -163,6 +168,7 @@ enter.onclick = function(){
 			}else{
 				var cows = nObj['cows'], bulls = nObj['bulls'];
 				msg.innerText = 'You guessed ' + cows + ' cows and ' + bulls + ' bulls';
+				yourguess.innerHTML += '<br />' + yourNum;
 				
 				if(bulls == 4){
 					msg.innerText = 'Congratulations';
@@ -178,6 +184,7 @@ enter.onclick = function(){
 				}
 				else{
 					msg.innerText = 'My guess is : ' + myGuess;
+					myguess.innerHTML += '<br />' + myGuess;
 				}
 			}
 		}else if(state == 2){
