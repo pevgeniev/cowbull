@@ -36,9 +36,9 @@ function isNumAllowed(num){
 	if (num <= minNum || num >= maxNum)
 		return false;
 	var n1 = num % 10;
-	num = Math.floor(num, 10);
+	num = Math.floor(num / 10);
 	var n2 = num % 10;
-	num = Math.floor(num, 10);
+	num = Math.floor(num / 10);
 	var n3 = num % 10;
 	var n4 = Math.floor(num / 10);
 	return n1 != 0 && n1 != n2 && n1 != n3 && n1 != n4 && n2 != n3 && n2 != n4 && n3 != n4;
@@ -48,9 +48,9 @@ function isNumAllowed2(num, objNum){
 	if (num <= minNum || num >= maxNum)
 		return false;
 	objNum['n1'] = num % 10;
-	num = Math.floor(num, 10);
+	num = Math.floor(num / 10);
 	objNum['n2'] = num % 10;
-	num = Math.floor(num, 10);
+	num = Math.floor(num / 10);
 	objNum['n3'] = num % 10;
 	objNum['n4'] = Math.floor(num / 10);
 	return objNum['n1'] != 0 && objNum['n1'] != objNum['n2'] && objNum['n1'] != objNum['n3'] && objNum['n1'] != objNum['n4']  && 
