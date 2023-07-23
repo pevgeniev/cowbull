@@ -22,6 +22,8 @@ height: 100%;
 <button id="enter">Enter</button>
 
 <br/>
+<button id="show">show</button>
+<br/>
 <div style="display: inline-block; width: 20%">Your guesses: <br/>
 	<div id="yourguess" > </div>
 </div>
@@ -38,6 +40,7 @@ var msg = document.getElementById('msg');
 var enter = document.getElementById('enter');
 var yourguess = document.getElementById('yourguess');
 var myguess = document.getElementById('myguess');
+var show = document.getElementById('show');
 	
 var minNum = 1022;
 var maxNum = 9877;
@@ -211,15 +214,21 @@ enter.onclick = function(){
 				if(myBulls != 4){
 					RemoveNums(myGuess, nums, myCows, myBulls);
 					myguess.innerHTML += '<br />' + myGuess + ' (cows: ' + myCows + ', bulls: ' + myBulls + ')';
-					state = 1;
-					info.innerText = 'Enter a guess number:';
-					msg.innerText = '';
 				}else{
 					msg.innerText = 'Congratulate me';
 				}
+				
+				state = 1;
+				info.innerText = 'Enter a guess number:';
+				msg.innerText = '';
+			
 			}
 		}
 	}
+}
+
+show.onclick = function(){
+	msg.innerText = myNum;
 }
 init();
 
