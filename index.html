@@ -154,21 +154,20 @@ function init(){
 }
 
 enter.onclick = function(){
-	msg.innerText = '';
 	var yourNum = parseInt(num.value), nObj = {};
 	if(isNaN(yourNum)){
-		msg.innerText = 'Invalid number';
+		alert('Invalid number');
 	}
 	else{
 		num.value = '';
 		if(state == 1){
 			var nObj = {};
 			if(!GetCowsAndNums(m1, m2, m3, m3, yourNum, nObj)){
-				msg.innerText = 'Invalid guess number';
+				alert('Invalid guess number');
 			}else{
 				var cows = nObj['cows'], bulls = nObj['bulls'];
-				msg.innerText = 'You guessed ' + cows + ' cows and ' + bulls + ' bulls';
-				yourguess.innerHTML += '<br />' + yourNum;
+				msg.innerText = 'You guessed ' + cows + ' cows and ' + bulls + ' bulls.';
+				yourguess.innerHTML += '<br />' + yourNum + ' (cows: ' + cows + ', bulls: ' + bulls + ')';
 				
 				if(bulls == 4){
 					msg.innerText = 'Congratulations';
@@ -180,16 +179,15 @@ enter.onclick = function(){
 				
 				myGuess = GetMyGuess(nums);
 				if(myGuess == 0){
-					msg.innerText = 'You cheated';
+					alert(' You cheated');
 				}
 				else{
-					msg.innerText = 'My guess is : ' + myGuess;
-					myguess.innerHTML += '<br />' + myGuess;
+					msg.innerText += ' My guess is : ' + myGuess;
 				}
 			}
 		}else if(state == 2){
 			if(yourNum < 0 || yourNum > 4){
-				msg.innerText = 'Invalid cows count';
+				alert('Invalid cows count');
 			}else{
 				myCows = yourNum;
 				state = 3;
@@ -197,14 +195,14 @@ enter.onclick = function(){
 			}
 		}else if(state == 3){
 			if(yourNum < 0 || yourNum > 4){
-				msg.innerText = 'Invalid bulls count';
+				alert('Invalid bulls count');
 			}
 			else{
 				myBulls = yourNum;
 				
 				if(myBulls != 4){
 					RemoveNums(myGuess, nums, myCows, myBulls);
-					
+					myguess.innerHTML += '<br />' + myGuess + ' (cows: ' + myCows + ', bulls: ' + bulls + ')';
 					state = 1;
 					info.innerText = 'Enter a guess number:';
 					msg.innerText = '';
