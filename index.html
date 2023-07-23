@@ -53,7 +53,7 @@ function isNumAllowed2(num, objNum){
 	num /= 10;
 	objNum['n3'] = num % 10;
 	objNum['n4'] = num / 10;
-	return objNum['n1'] != 0 && objNum['n1'] != objNum['n2'] && objNum['n1'] != n3 && objNum['n1'] != objNum['n4']  && 
+	return objNum['n1'] != 0 && objNum['n1'] != objNum['n2'] && objNum['n1'] != objNum['n3'] && objNum['n1'] != objNum['n4']  && 
 		objNum['n2'] != objNum['n3'] && objNum['n2'] != objNum['n4']  && objNum['n3'] != objNum['n4'] ;
 }
 
